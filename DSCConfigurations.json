@@ -1,0 +1,121 @@
+{
+    "AllNodes": [
+        {
+            "NodeName": "100.92.8.70",
+            "Role": [
+				"Portal",
+                "PortalWebAdaptor"
+            ]
+        },
+        {
+            "NodeName": "100.92.8.169",
+            "Role": [
+				"Portal",
+                "PortalWebAdaptor"
+            ]
+        },
+        {
+            "NodeName": "server01.usss.com",
+            "Role": [
+				"Server",
+                "ServerWebAdaptor"
+            ]
+        },
+        {
+            "NodeName": "server02.usss.com",
+            "Role": [
+				"Server",
+                "ServerWebAdaptor"
+            ]
+        },
+        {
+            "NodeName": "datastore01.usss.com",
+            "DataStoreTypes": [
+                "Relational",
+				"TileCache"
+            ],
+            "Role": [
+				"DataStore"
+            ]
+        },
+        {
+            "NodeName": "datastore02.usss.com",
+            "DataStoreTypes": [
+                "Relational",
+				"TileCache"
+            ],
+            "Role": [
+				"DataStore"
+            ]
+        },
+        {
+            "NodeName": "100.92.8.97",
+            "Role": [
+			"FileShare"
+            ]
+        }
+    ],
+    "ConfigData": {
+        "Version": "10.7.1",
+        "ServerContext": "server",
+        "PortalContext": "portal",
+        "FileShareLocalPath": "C:\\FileShare",
+        "FileShareName": "FileShare",
+        "ServerRole": "GeneralPurposeServer",
+        "Credentials": {
+            "ServiceAccount": {
+                "UserName": "arcgis_service",
+                "Password": "1qaz!QAZ2wsx@WSX",
+                "IsDomainAccount": false
+            }
+        },
+        "Server": {
+			"ExternalLoadBalancer": "usss.aws.esri-ps.com",
+            "LicenseFilePath": "C:\\software\\server_ent_adv_1071.ecp",
+            "Installer": {
+                "Path": "C:\\software\\10.7.1\\ArcGIS_Server_Windows_1071_169677.exe",
+                "InstallDir": "C:\\Program Files\\ArcGIS\\Server",
+                "InstallDirPython": "C:\\Python27"
+            },
+            "ServerDirectoriesRootLocation": "\\\\10.0.151.173\\FileShare\\arcgisserver\\directories",
+            "ConfigStoreLocation": "\\\\10.0.151.173\\FileShare\\arcgisserver\\config-store",
+            "PrimarySiteAdmin": {
+                "UserName": "siteadmin",
+                "Password": "password"
+            }
+        },
+        "Portal": {
+			"ExternalLoadBalancer": "usss.aws.esri-ps.com",
+            "LicenseFilePath": "C:\\software\\portal_1071.json",
+            "PortalLicenseUserTypeId": "creatorUT",
+            "Installer": {
+                "Path": "C:\\software\\10.7.1\\Portal_for_ArcGIS_Windows_1071_169688.exe",
+                "InstallDir": "C:\\Program Files\\ArcGIS\\Portal",
+                "ContentDir": "C:\\arcgisportal\\content"
+            },
+            "ContentDirectoryLocation": "\\\\10.0.151.173\\FileShare\\arcgisportal\\content",
+			"EnableAutomaticAccountCreation": false,
+            "PortalAdministrator": {
+                "UserName": "portaladmin",
+                "Email": "jturcok@esri.com",
+                "Password": "password",
+                "SecurityQuestionIndex": 1,
+                "SecurityAnswer": "vanilla"
+            }
+        },
+        "DataStore": {
+            "ContentDirectoryLocation": "C:\\arcgisdatastore",
+            "EnableFailoverOnPrimaryStop": true,
+            "Installer": {
+                "Path": "C:\\software\\10.7.1\\ArcGIS_DataStore_Windows_1071_169689.exe",
+                "InstallDir": "C:\\Program Files\\ArcGIS\\DataStore"
+            }
+        },
+        "WebAdaptor": {
+            "AdminAccessEnabled": true,
+            "Installer": {
+                "Path": "C:\\software\\10.7.1\\Web_Adaptor_for_Microsoft_IIS_1071_169690.exe"
+            }
+        }
+    }
+}
