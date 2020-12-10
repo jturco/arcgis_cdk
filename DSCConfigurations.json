@@ -1,14 +1,14 @@
 {
     "AllNodes": [
         {
-            "NodeName": "100.92.8.70",
+            "NodeName": "portal01.usss.com",
             "Role": [
 				"Portal",
                 "PortalWebAdaptor"
             ]
         },
         {
-            "NodeName": "100.92.8.169",
+            "NodeName": "portal02.usss.com",
             "Role": [
 				"Portal",
                 "PortalWebAdaptor"
@@ -56,7 +56,7 @@
         }
     ],
     "ConfigData": {
-        "Version": "10.7.1",
+        "Version": "10.8.1",
         "ServerContext": "server",
         "PortalContext": "portal",
         "FileShareLocalPath": "C:\\FileShare",

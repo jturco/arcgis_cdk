@@ -185,13 +185,14 @@ class ArcgisCdkStack(core.Stack):
                 }}
             ])
             
-            if instance == "portal_instance":
+            logger.info("Adding instance to target group list")
+            if "portal_instance"  in instance:
                 logger.info("Found Portal Instance")
                 # target_portal = elbv2_targets.InstanceTarget(instance=ec2_instance,port=443)
                 target_portal2 = elbv2.InstanceTarget(instance_id=ec2_instance.instance_id, port=443)
                 portal_instances.append(target_portal2)
                 # target_portal.attach_to_application_target_group(portal_tg)
-            if instance == "server_instance" :
+            if "server_instance" in instance:
                 logger.info("Found Server Instance")
                 # target_server = elbv2_targets.InstanceTarget(instance=ec2_instance, port=443)
                 target_server2 = elbv2.InstanceTarget(instance_id=ec2_instance.instance_id, port=443)
@@ -201,12 +202,17 @@ class ArcgisCdkStack(core.Stack):
             
             r53_name = instance_tag.split("_")[1] + instance_tag.split("_")[2]
             record_set = r53.ARecord(self, id=instance_tag + "_rs", target=r53.RecordTarget.from_ip_addresses(ec2_instance.instance_private_ip), zone=r53_phz, record_name=r53_name)
-            
+
+        logger.info("About to create Application Load Balancer")
+        logger.info("Listing Target Groups")
+        logger.info(portal_instances)
+        logger.info(server_instances)  
         alb = elbv2.ApplicationLoadBalancer(self, config["customer"] + "-" + "arcgis-alb", vpc=vpc, internet_facing=True, security_group=sg_public, load_balancer_name=config["customer"] + "-" + "arcgis-alb")
         portal_tg = elbv2.ApplicationTargetGroup(self, id=config["customer"] + "-portal-tg", target_group_name=config["customer"] + "-portal-tg", port=443, vpc=vpc, target_type=elbv2.TargetType.INSTANCE, targets=portal_instances)
         server_tg = elbv2.ApplicationTargetGroup(self, id=config["customer"] + "-server-tg", target_group_name=config["customer"] + "-server-tg", port=443, vpc=vpc, target_type=elbv2.TargetType.INSTANCE, targets=server_instances)
         listener_cert = elbv2.ListenerCertificate(config["cert_arn"])
         listener = elbv2.ApplicationListener(self, id=config["customer"] +"-listener", load_balancer=alb, certificates=[listener_cert], default_target_groups=[portal_tg], port=443)
-        
+        alb_rule = elbv2.ApplicationListenerRule(self, id=config["customer"] +"-rule", priority=1, listener=listener, path_pattern="/server/*", target_groups=[server_tg])
+
         zone = r53.HostedZone.from_hosted_zone_attributes(self, "in_hz", zone_name="aws.esri-ps.com", hosted_zone_id=config["public_hosted_zone_id"])
         public_record_set = r53.CnameRecord(self, id="alb_rs", domain_name=alb.load_balancer_dns_name, zone=zone, record_name=config["customer"])
