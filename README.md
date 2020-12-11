@@ -1,7 +1,29 @@
 
-# Welcome to your CDK Python project!
+# Welcome to the arcgis_cdk
 
-This is a blank project for Python development with CDK.
+Over view of the project goes here
+
+## Prerequisites
+
+* An AWS Account
+* An S3 Bucket
+* Access to ArcGIS Insallation and License files
+* AWS CLI --> Link
+* AWS CDK --> Link
+* Ability to create DNS Records to Point to A Record (optionally this can be done with CDK if use AWS Route53 --> Link)
+
+## Getting Started
+
+1. Upload the following files to your S3 bucket
+- Portal for ArcGIS
+- ArcGIS Server
+- ArcGIS DataStore
+- ArcGIS Web Adaptor for Microsoft IIS
+
+2. Ensure the AWS CLI and AWS CDK have been installed and configured (see links above if you havne't already)
+3. ....
+
+## Configuring, Synthesesing, and Deploying the CDK
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
@@ -47,7 +69,7 @@ To add additional dependencies, for example other CDK libraries, just add
 them to your `setup.py` file and rerun the `pip install -r requirements.txt`
 command.
 
-## Useful commands
+### Useful commands
 
  * `cdk ls`          list all stacks in the app
  * `cdk synth`       emits the synthesized CloudFormation template
@@ -55,4 +77,6 @@ command.
  * `cdk diff`        compare deployed stack with current state
  * `cdk docs`        open CDK documentation
 
-Enjoy!
+## Using AWS System Manager to Deploy ArcGIS Enterprise with PowerShell DSC
+
+Stuff about how we did that. 

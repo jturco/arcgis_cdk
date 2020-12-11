@@ -97,7 +97,7 @@
 			"EnableAutomaticAccountCreation": false,
             "PortalAdministrator": {
                 "UserName": "portaladmin",
-                "Email": "jturcok@esri.com",
+                "Email": "jturco@esri.com",
                 "Password": "password",
                 "SecurityQuestionIndex": 1,
                 "SecurityAnswer": "vanilla"
