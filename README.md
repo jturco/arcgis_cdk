@@ -77,6 +77,30 @@ command.
  * `cdk diff`        compare deployed stack with current state
  * `cdk docs`        open CDK documentation
 
-## Using AWS System Manager to Deploy ArcGIS Enterprise with PowerShell DSC
+## AWS System Manager - Machine Setup
 
-Stuff about how we did that. 
+What are we doing with this section and why is it needed
+
+1. Ensure the ArcGIS Enterprise Software has been uploaded to the S3 bucekt created by the CDK
+2. Navigate to Amazon Sysetms Manager -> Run Command
+3. Create a new run command
+4. Search for the PowerShell Image
+5. A template PowerShell - EC2 Instance Prep file has been provided "EC2-Instance-Prep.ps1".  Edit the following sections with your paramaters
+    * Bucket name 
+    * License file name
+    * IP Addresses of machines
+    Note: If you've run the CDK, these variables will be provided as outputs in the log.....
+6. Paramaters for Run Command
+    * This....
+    * That....
+7. Execute the Run Command!!
+
+![Image place holder](https://www.fillmurray.com/640/360)
+
+## AWS System Manager - PowerShell DSC Command
+
+At this point the infrastructure should have been stood up with CDK, the EC2 Instances should have been prepped by the first Run Command in System Manager.  It's time to Deploy Some SOftware.
+
+1. Head back to the System Manager --? Run Command Section
+2. Create a new run command
+3. Search for the PowerShell Template
