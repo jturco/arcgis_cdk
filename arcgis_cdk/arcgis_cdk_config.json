@@ -1,12 +1,12 @@
 {
   "configuration" : {
-    "customer" : "usss",
-    "high_availability" : "true",
-    "cert_arn" : "arn:aws:acm:us-east-1:652238682922:certificate/e682c355-d107-4b94-8eae-a4fd35a17287",
+    "stack_name" : "",
+    "high_availability" : "",
+    "cert_arn" : "",
     "file_server_size" : "m5.large",
-    "kp_name" : "jturco-kp-us-east-1",
-    "public_hosted_zone_id" : "Z00941532S72TYRR5ABAC",
-    "build_dsc_file" : "true"
+    "kp_name" : "",
+    "public_hosted_zone_id" : "",
+    "build_dsc_file" : ""
   },  
   "instances": {
      "portal_instance": {
@@ -38,6 +38,6 @@
         }
     },
     "security_group_ingress" : {
-        "ip_address" : "71.121.190.79/32"
+        "ip_address" : ""
     }
 }   

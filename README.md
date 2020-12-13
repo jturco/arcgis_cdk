@@ -1,7 +1,7 @@
 
 # Welcome to the arcgis_cdk
 
-Over view of the project goes here
+This project uses AWS CDK, AWS Systems Manager, and ArcGIS PowerShellDSC Libraries to automate the deployment of AWS Infrastructure and ArcGIS Enterprise.
 
 ## Prerequisites
 
@@ -12,18 +12,12 @@ Over view of the project goes here
 * AWS CDK --> Link
 * Ability to create DNS Records to Point to A Record (optionally this can be done with CDK if use AWS Route53 --> Link)
 
-## Getting Started
-
-1. Upload the following files to your S3 bucket
-- Portal for ArcGIS
-- ArcGIS Server
-- ArcGIS DataStore
-- ArcGIS Web Adaptor for Microsoft IIS
-
-2. Ensure the AWS CLI and AWS CDK have been installed and configured (see links above if you havne't already)
-3. ....
 
 ## Configuring, Synthesesing, and Deploying the CDK
+
+Overview of CDK goes here...and links to setup....
+
+How to get started with the CDK
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
@@ -80,7 +74,7 @@ command.
 
 A few things here about CDK and
 
-## CDK Configuration Paramaters
+### CDK Configuration Paramaters
 
 * Configruation Paramaters
 * Number 2
@@ -89,7 +83,11 @@ A few things here about CDK and
 ## AWS System Manager - Machine Setup
 
 Before we get started with installing PowerShell DSC via the Invoke-ArcGIS Command we need to do a little machine prep.  The prep includes:
-* Downloading the software and licenses from the S3 bucketll
+* Downloading the software and licenses from the S3 bucket created by the arcgis_cdk run
+    - Portal for ArcGIS (and license)
+    - ArcGIS Server (and license)
+    - ArcGIS DataStore
+    - ArcGIS Web Adaptor for Microsoft IIS
 * Downloading the PowerShell DSC modules and adding to PowerShe
 * Adding a local account to each machine for Windows Remote Management (WInRM)
 * Changing the execution policy

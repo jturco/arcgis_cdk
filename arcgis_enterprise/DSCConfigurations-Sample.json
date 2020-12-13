@@ -1,35 +1,35 @@
 {
     "AllNodes": [
         {
-            "NodeName": "<internal ip address>",
+            "NodeName": "10.0.173.116",
             "Role": [
 				"Portal",
                 "PortalWebAdaptor"
             ]
         },
         {
-            "NodeName": "<internal ip address>",
+            "NodeName": "10.0.141.0",
             "Role": [
 				"Portal",
                 "PortalWebAdaptor"
             ]
         },
         {
-            "NodeName": "<internal ip address>",
+            "NodeName": "10.0.176.157",
             "Role": [
 				"Server",
                 "ServerWebAdaptor"
             ]
         },
         {
-            "NodeName": "<internal ip address>",
+            "NodeName": "10.0.151.89",
             "Role": [
 				"Server",
                 "ServerWebAdaptor"
             ]
         },
         {
-            "NodeName": "<internal ip address>",
+            "NodeName": "10.0.143.22",
             "DataStoreTypes": [
                 "Relational",
 				"TileCache"
@@ -39,7 +39,7 @@
             ]
         },
         {
-            "NodeName": "<internal ip address>",
+            "NodeName": "10.0.156.232",
             "DataStoreTypes": [
                 "Relational",
 				"TileCache"
@@ -49,7 +49,7 @@
             ]
         },
         {
-            "NodeName": "<internal ip address>",
+            "NodeName": "10.0.149.24",
             "Role": [
 			"FileShare"
             ]
@@ -64,28 +64,28 @@
         "ServerRole": "GeneralPurposeServer",
         "Credentials": {
             "ServiceAccount": {
-                "UserName": "",
-                "Password": "",
+                "UserName": "arcgis_service",
+                "Password": "1qaz!QAZ2wsx@WSX",
                 "IsDomainAccount": false
             }
         },
         "Server": {
-			"ExternalLoadBalancer": "<external DNS>",
+			"ExternalLoadBalancer": "usss.aws.esri-ps.com",
             "LicenseFilePath": "C:\\software\\server_ent_adv_1071.ecp",
             "Installer": {
                 "Path": "C:\\software\\ArcGIS_Server_Windows_1071_169677.exe",
                 "InstallDir": "C:\\Program Files\\ArcGIS\\Server",
                 "InstallDirPython": "C:\\Python27"
             },
-            "ServerDirectoriesRootLocation": "",
-            "ConfigStoreLocation": "",
+            "ServerDirectoriesRootLocation": "\\\\10.0.149.24\\FileShare\\arcgisserver\\directories",
+            "ConfigStoreLocation": "\\\\10.0.149.24\\FileShare\\arcgisserver\\config-store",
             "PrimarySiteAdmin": {
-                "UserName": "",
-                "Password": ""
+                "UserName": "siteadmin",
+                "Password": "password"
             }
         },
         "Portal": {
-			"ExternalLoadBalancer": "",
+			"ExternalLoadBalancer": "usss.aws.esri-ps.com",
             "LicenseFilePath": "C:\\software\\portal_1071.json",
             "PortalLicenseUserTypeId": "creatorUT",
             "Installer": {
@@ -93,14 +93,14 @@
                 "InstallDir": "C:\\Program Files\\ArcGIS\\Portal",
                 "ContentDir": "C:\\arcgisportal\\content"
             },
-            "ContentDirectoryLocation": "",
+            "ContentDirectoryLocation": "\\\\10.0.149.24\\FileShare\\arcgisportal\\content",
 			"EnableAutomaticAccountCreation": false,
             "PortalAdministrator": {
-                "UserName": "",
-                "Email": "",
-                "Password": "",
-                "SecurityQuestionIndex": 0,
-                "SecurityAnswer": ""
+                "UserName": "portaladmin",
+                "Email": "jturco@esri.com",
+                "Password": "password",
+                "SecurityQuestionIndex": 1,
+                "SecurityAnswer": "vanilla"
             }
         },
         "DataStore": {

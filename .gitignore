@@ -9,3 +9,7 @@ arcgis_cdk/logs
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+test
+arcgis_enterprise/EC2InstancePrep_local.ps1
+arcgis_enterprise/DSCConfigurations_local.json
+arcgis_cdk/arcgis_cdk_config_local.json
