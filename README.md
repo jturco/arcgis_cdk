@@ -7,8 +7,8 @@ This project uses AWS Cloud Development Kit, AWS Systems Manager, and ArcGIS Pow
 
 * An AWS Account
 * Access to ArcGIS Insallation and License files
-* [https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html](AWS Command Line Interface (CLI))
-* [https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html](AWS Cloud Development Kit)
+* [AWS Command Line Interface (CLI)](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+* [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html)
 * Ability to create DNS Records to Point to A Record
 * Amazon Certificate Manage Certificate
 
@@ -75,13 +75,13 @@ command.
 
 Now that you have your virtual envrionment setup with AWS CDK, lets take a look at how this repo is using it.  There is a arcgis_cdk_config.json file in the arcgis_cdk directory.  The following parameters can be used.
 
-* stack_name - the name of your stack (will also show up as )
-* high_availability - true/false depending on if you want site to be HA
-* cert_arn - ARN for your ACM certificate
-* file_server_size - size of file server ( m5.large)
-* kp_name - key pair name
-* public_hosted_zone_id - zone id for your Route53 public hosted zone
-* build_dsc_file - comming soon
+* `stack_name` - the name of your stack (will also show up as )
+* `high_availability` - true/false depending on if you want site to be HA
+* `cert_arn` - ARN for your ACM certificate
+* `file_server_size` - size of file server ( m5.large)
+* `kp_name` - key pair name
+* `public_hosted_zone_id` - zone id for your Route53 public hosted zone
+* `build_dsc_file` - comming soon
 
 Once the arcgis_cdk_config.json has been updated be sure to synth and deploy your code
 
