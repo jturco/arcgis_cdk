@@ -108,7 +108,7 @@ The CDK deploys the following resource to your AWS account:
 * A new Route53 private hosted zones with record sets mapping to each EC2 Instnace
 
 A logical diagram of the infrastructure can be found below:
-![arcgis_cdk_diagram](https://github.com/jturco/arcgis_cdk/blob/main/images/arcgis_cdk_diagram_.png)
+![arcgis_cdk_diagram](https://github.com/jturco/arcgis_cdk/blob/main/images/arcgis_cdk_diagram.png)
 
 ## AWS System Manager
 
