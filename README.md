@@ -18,6 +18,8 @@ The Amazon Cloud Development Kit is a relatively newer tool that allows develope
 
 Before proceeding, ensure you have both the AWS CLI and AWS CDK available and working (see prerequisites for more information)
 
+### CDK Overview
+
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
 This project is set up like a standard Python project.  The initialization
