@@ -114,6 +114,21 @@ A logical diagram of the infrastructure can be found below:
 
 Run Commands from AWS System Manager will be used to remotely execute code on the EC2 Instances. This will be done in two steps.  We must first prep the instances with our software, then execute the Powershell DSC scripts.
 
+### PowerShell DSC Configuratio File
+
+Now that we have our infrastucure we need to populate our PowerSHell DSC file.  There is a sample file title `DSCConfigurations-Sample.json` in the repo.  
+
+You will need to edit this file we your private IP addresses from the arcgis_cdk deployment above. 
+
+### S3 Bucket Artifacts
+
+We are going to execute code remotely on EC2 Instances and some of the execution requires files to be present in our S3 bucket that was created by the CDK. 
+
+The following things need to be upload into the S3 bucket:
+* ArcGIS Software Install files (Portal for ArcGIS, ArcGIS Server, ArcGIS Datastore, and Web Adaptor for IIS)
+* ArcGIS Licenses files (Portal & Server)
+* The PowerShell DSC Configuratio File that was edited above
+
 ### Instance Prep
 
 Before we get started with installing PowerShell DSC via the Invoke-ArcGIS Command we need to do a little machine prep.  The prep includes:
@@ -145,7 +160,7 @@ Login to your AWS Account to Execute the Code:
     * `AWS-RunPowerShellScript`
 6. Paramaters for Run Command
     * `Document` - 1 (Default)
-    * `Command paramaters` - Copy the contents from EC2InstancePrep.ps1 file (updated with your paramaters)
+    * `Command paramaters` - Copy the contents from `EC2InstancePrep.ps1` file (updated with your paramaters)
     * `Working Directory` - Leave Blank
     * `Execution Timeout` - Leave at 3600
     * `Targets` - Choose the instances that were deployed above
@@ -177,4 +192,4 @@ At this point the infrastructure should have been stood up with CDK, the EC2 Ins
 
 ### Summary
 
-Your all set! Login to the newly deployed ArcGIS Enterprise site using the credentials created in the PowerShell DSC file and the URL specificied in your Route53 entries. 
+Your all set! Login to the newly deployed ArcGIS Enterprise site using the credentials created in the PowerShell DSC file and the URL specificied in your Route53 entries! 
