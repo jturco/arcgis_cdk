@@ -73,23 +73,23 @@ class ArcgisCdkStack(core.Stack):
     def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
         logger.info('Initializing ArcGIS Cdk Stack')
-        logger.info(f'Stack Name - {config["customer"]}')
+        logger.info(f'Stack Name - {config["stack_name"]}')
         # The code that defines your stack goes here
         logger.info('Creating deployment bucket')
         deployment_bucket = s3.Bucket(self,
-            config["customer"] + "_" +"arcgis_cdk_bucket"
+            config["stack_name"] + "_" +"arcgis_cdk_bucket"
         )
 
         logger.info('Creating VPC')
         # Future, add ability to read from existing VPC
-        vpc = ec2.Vpc(self, config["customer"] + "_" +"arcgis_cdk_vpc")
+        vpc = ec2.Vpc(self, config["stack_name"] + "_" +"arcgis_cdk_vpc")
 
         logger.info('Creating private hosted zone')
-        r53_phz = r53.PrivateHostedZone(self, id=config["customer"] + "_" + "phz", vpc=vpc, zone_name=config["customer"]+".com")
+        r53_phz = r53.PrivateHostedZone(self, id=config["stack_name"] + "_" + "phz", vpc=vpc, zone_name=config["stack_name"]+".com")
 
         logger.info('Creating Security Groups')
-        sg_public = ec2.SecurityGroup(self, config["customer"] + "_" + "sg_public", vpc=vpc, security_group_name=config["customer"] + "_" + "arcgis_sg_public")
-        sg_private = ec2.SecurityGroup(self, config["customer"] + "_" + "sg_private", vpc=vpc, security_group_name=config["customer"] + "_" + "arcgis_sg_private")
+        sg_public = ec2.SecurityGroup(self, config["stack_name"] + "_" + "sg_public", vpc=vpc, security_group_name=config["stack_name"] + "_" + "arcgis_sg_public")
+        sg_private = ec2.SecurityGroup(self, config["stack_name"] + "_" + "sg_private", vpc=vpc, security_group_name=config["stack_name"] + "_" + "arcgis_sg_private")
         sg_private.add_ingress_rule(peer=sg_public , connection=ec2.Port.tcp(443))
         sg_private.add_ingress_rule(peer=sg_public , connection=ec2.Port.tcp(3389))
         sg_private.add_ingress_rule(peer=sg_public , connection=ec2.Port.tcp(5985))
@@ -99,7 +99,7 @@ class ArcgisCdkStack(core.Stack):
         sg_public.add_ingress_rule(peer=ec2.Peer.ipv4(rdp_ingress), connection=ec2.Port.tcp(3389))
         
         logger.info('Creating IAM Role for insances')
-        role = iam.Role(self, config["customer"] + "-" + "arcgis-ec2-iam-role", assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
+        role = iam.Role(self, config["stack_name"] + "-" + "arcgis-ec2-iam-role", assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
         role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name("service-role/AmazonEC2RoleforSSM"))
         role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name("AmazonS3FullAccess"))
 
@@ -109,7 +109,7 @@ class ArcgisCdkStack(core.Stack):
             ha_instances = []
             for instance in instances:
                 ha_instance = {}
-                instances[instance]['tag'] = config["customer"] + "_" + instances[instance]["tag"] + "_01"
+                instances[instance]['tag'] = config["stack_name"] + "_" + instances[instance]["tag"] + "_01"
                 ha_instance[instance + "_02"] = {}
                 instance_tag = instances[instance]["tag"][:-3] + "_02"
                 ha_instance[instance + "_02"]["tag"] = instance_tag
@@ -117,7 +117,7 @@ class ArcgisCdkStack(core.Stack):
                 ha_instance[instance + "_02"]["subnet"] = instances[instance]["subnet"]
                 ha_instances.append(ha_instance)
             logger.debug(ha_instances)
-            fileserver["tag"] = config["customer"] + "_fileserver_01"
+            fileserver["tag"] = config["stack_name"] + "_fileserver_01"
             fileserver["size"] = config["file_server_size"]
             fileserver["subnet"] = "private"
             instances[instance] = fileserver
@@ -190,13 +190,13 @@ class ArcgisCdkStack(core.Stack):
             record_set = r53.ARecord(self, id=instance_tag + "_rs", target=r53.RecordTarget.from_ip_addresses(ec2_instance.instance_private_ip), zone=r53_phz, record_name=r53_name)
 
         logger.info("Creating Application Load Balancer")
-        alb = elbv2.ApplicationLoadBalancer(self, config["customer"] + "-" + "arcgis-alb", vpc=vpc, internet_facing=True, security_group=sg_public, load_balancer_name=config["customer"] + "-" + "arcgis-alb")
-        portal_tg = elbv2.ApplicationTargetGroup(self, id=config["customer"] + "-portal-tg", target_group_name=config["customer"] + "-portal-tg", port=443, vpc=vpc, target_type=elbv2.TargetType.INSTANCE, targets=portal_instances)
-        server_tg = elbv2.ApplicationTargetGroup(self, id=config["customer"] + "-server-tg", target_group_name=config["customer"] + "-server-tg", port=443, vpc=vpc, target_type=elbv2.TargetType.INSTANCE, targets=server_instances)
+        alb = elbv2.ApplicationLoadBalancer(self, config["stack_name"] + "-" + "arcgis-alb", vpc=vpc, internet_facing=True, security_group=sg_public, load_balancer_name=config["stack_name"] + "-" + "arcgis-alb")
+        portal_tg = elbv2.ApplicationTargetGroup(self, id=config["stack_name"] + "-portal-tg", target_group_name=config["stack_name"] + "-portal-tg", port=443, vpc=vpc, target_type=elbv2.TargetType.INSTANCE, targets=portal_instances)
+        server_tg = elbv2.ApplicationTargetGroup(self, id=config["stack_name"] + "-server-tg", target_group_name=config["stack_name"] + "-server-tg", port=443, vpc=vpc, target_type=elbv2.TargetType.INSTANCE, targets=server_instances)
         listener_cert = elbv2.ListenerCertificate(config["cert_arn"])
-        listener = elbv2.ApplicationListener(self, id=config["customer"] +"-listener", load_balancer=alb, certificates=[listener_cert], default_target_groups=[portal_tg], port=443)
-        alb_rule = elbv2.ApplicationListenerRule(self, id=config["customer"] +"-rule", priority=1, listener=listener, path_pattern="/server/*", target_groups=[server_tg])
+        listener = elbv2.ApplicationListener(self, id=config["stack_name"] +"-listener", load_balancer=alb, certificates=[listener_cert], default_target_groups=[portal_tg], port=443)
+        alb_rule = elbv2.ApplicationListenerRule(self, id=config["stack_name"] +"-rule", priority=1, listener=listener, path_pattern="/server/*", target_groups=[server_tg])
 
         logger.info("Creating public hosted zone feature set to map to ALB")
         zone = r53.HostedZone.from_hosted_zone_attributes(self, "in_hz", zone_name="aws.esri-ps.com", hosted_zone_id=config["public_hosted_zone_id"])
-        public_record_set = r53.CnameRecord(self, id="alb_rs", domain_name=alb.load_balancer_dns_name, zone=zone, record_name=config["customer"])
+        public_record_set = r53.CnameRecord(self, id="alb_rs", domain_name=alb.load_balancer_dns_name, zone=zone, record_name=config["stack_name"])
