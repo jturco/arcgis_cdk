@@ -83,26 +83,35 @@ Now that you have your virtual envrionment setup with AWS CDK, lets take a look 
 * `public_hosted_zone_id` - zone id for your Route53 public hosted zone
 * `build_dsc_file` - comming soon
 
-Once the arcgis_cdk_config.json has been updated be sure to synth and deploy your code
+Once the arcgis_cdk_config.json has been updated run the following commands to deploy your code.
 
 ```
 $ cdk synth
 ```
+Note: you can find the resulting CloudFormation template that was created in the cdk.out directory
+
 ```
 $ cdk deploy
 ```
+Take a look in your AWS Account and notice everything that was deployed
+
+### CDK Results
+
+What did it deploy? Mayb architeture diagram....
 
 ## AWS System Manager - Machine Setup
 
 Before we get started with installing PowerShell DSC via the Invoke-ArcGIS Command we need to do a little machine prep.  The prep includes:
+
 * Downloading the software and licenses from the S3 bucket created by the arcgis_cdk run
     - Portal for ArcGIS (and license)
     - ArcGIS Server (and license)
     - ArcGIS DataStore
     - ArcGIS Web Adaptor for Microsoft IIS
-* Downloading the PowerShell DSC modules and adding to PowerShe
+* Downloading the PowerShell DSC modules and adding the ArcGIS Modules to PowerShell
 * Adding a local account to each machine for Windows Remote Management (WInRM)
 * Changing the execution policy
+* Enabling Windows Remote Management (WinRM) to that one machine can execute the commands
 
 A template PowerShell - EC2 Instance Prep file has been provided "EC2InstancePrep.ps1".  Edit the following sections with your paramaters
 * Bucket name 
@@ -113,11 +122,10 @@ A template PowerShell - EC2 Instance Prep file has been provided "EC2InstancePre
 2. Navigate to Amazon Sysetms Manager -> Run Command
 3. Create a new run command
 4. Search for the PowerShell Image
-    Note: If you've run the CDK, these variables will be provided as outputs in the log.....
-6. Paramaters for Run Command
+5. Paramaters for Run Command
     * This....
     * That....
-7. Execute the Run Command!!
+6. Execute the Run Command!!
 
 ![Image place holder](https://www.fillmurray.com/640/360)
 
