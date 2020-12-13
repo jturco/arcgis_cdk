@@ -129,12 +129,12 @@ A template PowerShell - EC2 Instance Prep file has been provided "EC2InstancePre
     * That....
 6. Execute the Run Command!!
 
-![Image place holder](https://www.fillmurray.com/640/360)
+![arcgis_cdk](https://github.com/jturco/arcgis_cdk/blob/main/images/arcgis_cdk_instance_prep.png)
 
 ## AWS System Manager - PowerShell DSC Command
 
 At this point the infrastructure should have been stood up with CDK, the EC2 Instances should have been prepped by the first Run Command in System Manager.  It's time to Deploy Some SOftware.
 
-1. Head back to the System Manager --? Run Command Section
+1. Head back to the System Manager -> Run Command Section
 2. Create a new run command
 3. Search for the PowerShell Template
