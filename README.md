@@ -6,13 +6,13 @@ This project uses the [AWS Cloud Development Kit](https://docs.aws.amazon.com/cd
 ## Prerequisites
 
 * An AWS Account
-* Access to ArcGIS Insallation and License files
+* Access to ArcGIS Installation and License files
 * [AWS Command Line Interface (CLI)](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 * [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html)
 * Ability to create DNS Records to Point to A Record
 * [Amazon Certificate Manage Certificate](https://aws.amazon.com/certificate-manager/)
 
-## Configuring, Synthesesing, and Deploying the CDK
+## Configuring, Synthesizing, and Deploying the CDK
 
 The AWS Cloud Development Kit is a relatively newer tool that allows developers to create code in the language that they are most comfortable in and translate that into AWS Infrastructure by generating CloudFormation templates.  
 
@@ -73,9 +73,9 @@ command.
  * `cdk docs`        open CDK documentation
 
 
-### CDK Configuration Paramaters
+### CDK Configuration Parameters
 
-Now that you have your virtual envrionment setup with AWS CDK, lets take a look at how this repo is using it.  There is a arcgis_cdk_config.json file in the arcgis_cdk directory.  The following parameters can be used.
+Now that you have your virtual environment setup with AWS CDK, let's take a look at how this repo is using it.  There is an arcgis_cdk_config.json file in the arcgis_cdk directory.  The following parameters can be used.
 
 * `stack_name` - the name of your stack (example - "maps")
 * `high_availability` - true/false 
@@ -101,22 +101,24 @@ Take a look in your AWS Account and notice everything that was deployed
 The CDK deploys the following resource to your AWS account:
 * A new VPC with multiple public/private subnets
 * EC2 Instances in the private Subnet
-* ALB in the public Subnet with a listner on 443
+* ALB in the public Subnet with a listener on 443
     * Path based routing rules for the listener
     * ACM Certificate attached to the listener
 * Route53 Record Set for an existing Public Hosted Zone that maps to the ALB
-* A new Route53 private hosted zones with record sets mapping to each EC2 Instnace
+* A new Route53 private hosted zones with record sets mapping to each EC2 Instance
 
 A logical diagram of the infrastructure can be found below:
 ![arcgis_cdk_diagram](https://github.com/jturco/arcgis_cdk/blob/main/images/arcgis_cdk_diagram.png)
 
 ## AWS System Manager
 
-Run Commands from AWS System Manager will be used to remotely execute code on the EC2 Instances. This will be done in two steps.  We must first prep the instances with our software, then execute the Powershell DSC scripts.
+Run Commands from AWS System Manager will be used to remotely execute code on the EC2 Instances. This will be done in two steps.  We must first prep the instances with our software, then execute the PowerShell DSC scripts.
 
-### PowerShell DSC Configuratio File
+### PowerShell DSC Configuration File
 
-Now that we have our infrastucure we need to populate our PowerSHell DSC file.  There is a sample file title `DSCConfigurations-Sample.json` in the repo.  
+Now that we have our infrastructure, we need to populate our PowerShell DSC file.  There is a sample file title `DSCConfigurations-Sample.json` in the repo.
+
+A detailed review of the Variables can be found at the [Variable Reference](https://github.com/Esri/arcgis-powershell-dsc/wiki/V3.-Variables-reference-page-for-JSON-configuration-files) page: 
 
 You will need to edit this file we your private IP addresses from the arcgis_cdk deployment above. 
 
@@ -127,7 +129,7 @@ We are going to execute code remotely on EC2 Instances and some of the execution
 The following things need to be upload into the S3 bucket:
 * ArcGIS Software Install files (Portal for ArcGIS, ArcGIS Server, ArcGIS Datastore, and Web Adaptor for IIS)
 * ArcGIS Licenses files (Portal & Server)
-* The PowerShell DSC Configuratio File that was edited above
+* The PowerShell DSC Configuration File that was edited above
 
 ### Instance Prep
 
@@ -153,43 +155,43 @@ Edit the following sections within the `EC2InstancePrep.ps1` file:
 Login to your AWS Account to Execute the Code: 
 
 1. Ensure the ArcGIS Enterprise Software has been uploaded to the S3 bucket created by the CDK
-2. Navigate to Amazon Sysetms Manager
+2. Navigate to AWS Systems Manager
 3. Chose the Run Command from the options on the left
 4. Create a new run command
 5. Search for the existing PowerShell Run Document
     * `AWS-RunPowerShellScript`
-6. Paramaters for Run Command
+6. Parameters for Run Command
     * `Document` - 1 (Default)
-    * `Command paramaters` - Copy the contents from `EC2InstancePrep.ps1` file (updated with your paramaters)
+    * `Command parameters` - Copy the contents from `EC2InstancePrep.ps1` file (updated with your parameters)
     * `Working Directory` - Leave Blank
     * `Execution Timeout` - Leave at 3600
     * `Targets` - Choose the instances that were deployed above
     * Other parameters can be left as default
-    * (Optionally) COnfigure an S3 Bucket where Command output will be added
+    * (Optionally) Configure an S3 Bucket where Command output will be added
 7. Execute the Run Command!!
 
 ![arcgis_cdk](https://github.com/jturco/arcgis_cdk/blob/main/images/arcgis_cdk_instance_prep.png)
 
 ### PowerShell DSC Command
 
-At this point the infrastructure should have been stood up with CDK, the EC2 Instances should have been prepped by the first Run Command in System Manager.  It's time to Deploy Some SOftware.
+At this point the infrastructure should have been stood up with CDK, the EC2 Instances should have been prepped by the first Run Command in System Manager.  It's time to Deploy Some Software.
 
-1. Ensure the ArcGIS Enterprise Software has been uploaded to the S3 bucekt created by the CDK
-2. Navigate to Amazon Sysetms Manager
+1. Ensure the ArcGIS Enterprise Software has been uploaded to the S3 bucket created by the CDK
+2. Navigate to AWS Systems Manager
 3. Chose the Run Command from the options on the left
 4. Create a new run command
 5. Search for the existing PowerShell Run Document
     * `AWS-RunPowerShellScript`
-6. Paramaters for Run Command
+6. Parameters for Run Command
     * `Document` - 1 (Default)
-    * `Command paramaters` - Copy the contents from `InvokeDSC.ps1` file (updated with your paramaters)
+    * `Command parameters` - Copy the contents from `InvokeDSC.ps1` file (updated with your parameters)
     * `Working Directory` - Leave Blank
     * `Execution Timeout` - Change to 28800 (we want to give the commands at least 8 hours to complete)
     * `Targets` - Choose **ONLY** the orchestration instance
     * Other parameters can be left as default
-    * *(Optionally)* COnfigure an S3 Bucket where Command output will be added
+    * *(Optionally)* Configure an S3 Bucket where Command output will be added
 7. Execute the Run Command!!
 
 ### Summary
 
-Your all set! Login to the newly deployed ArcGIS Enterprise site using the credentials created in the PowerShell DSC file and the URL specificied in your Route53 entries! 
+Your all set! Login to the newly deployed ArcGIS Enterprise site using the credentials created in the PowerShell DSC file and the URL specified in your Route53 entries! 
