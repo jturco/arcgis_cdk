@@ -137,7 +137,7 @@ Edit the following sections within the `EC2InstancePrep.ps1` file:
 
 Login to your AWS Account to Execute the Code: 
 
-1. Ensure the ArcGIS Enterprise Software has been uploaded to the S3 bucekt created by the CDK
+1. Ensure the ArcGIS Enterprise Software has been uploaded to the S3 bucket created by the CDK
 2. Navigate to Amazon Sysetms Manager
 3. Chose the Run Command from the options on the left
 4. Create a new run command
