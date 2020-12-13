@@ -70,7 +70,7 @@
             }
         },
         "Server": {
-			"ExternalLoadBalancer": "usss.aws.esri-ps.com",
+			"ExternalLoadBalancer": "jturco.aws.esri-ps.com",
             "LicenseFilePath": "C:\\software\\server_ent_adv_1071.ecp",
             "Installer": {
                 "Path": "C:\\software\\ArcGIS_Server_Windows_1071_169677.exe",
@@ -85,7 +85,7 @@
             }
         },
         "Portal": {
-			"ExternalLoadBalancer": "usss.aws.esri-ps.com",
+			"ExternalLoadBalancer": "jturco.aws.esri-ps.com",
             "LicenseFilePath": "C:\\software\\portal_1071.json",
             "PortalLicenseUserTypeId": "creatorUT",
             "Installer": {
