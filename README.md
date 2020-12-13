@@ -116,18 +116,26 @@ Before we get started with installing PowerShell DSC via the Invoke-ArcGIS Comma
 * Enabling Windows Remote Management (WinRM) to that one machine can execute the commands
 
 A template PowerShell - EC2 Instance Prep file has been provided "EC2InstancePrep.ps1".  Edit the following sections with your paramaters
-* Bucket name 
+* Bucket name & Object Keys
 * License file name
 * IP Addresses of machines
+* Username / Password of service account
 
 1. Ensure the ArcGIS Enterprise Software has been uploaded to the S3 bucekt created by the CDK
-2. Navigate to Amazon Sysetms Manager -> Run Command
-3. Create a new run command
-4. Search for the PowerShell Image
-5. Paramaters for Run Command
-    * This....
-    * That....
-6. Execute the Run Command!!
+2. Navigate to Amazon Sysetms Manager
+3. Chose the Run Command from the options on the left
+4. Create a new run command
+5. Search for the existing PowerShell Run Document
+    * `AWS-RunPowerShellScript`
+6. Paramaters for Run Command
+    * `Document` - 1 (Default)
+    * `Command paramaters` - Copy the contents from EC2InstancePrep.ps1 file (updated with your paramaters)
+    * `Working Directory` - Leave Blank
+    * `Execution Timeout` - Leave at 3600
+    * `Targets` - Choose the instances that were deployed above
+    * Other parameters can be left as default
+    * (Optionally) COnfigure an S3 Bucket where Command output will be added
+7. Execute the Run Command!!
 
 ![arcgis_cdk](https://github.com/jturco/arcgis_cdk/blob/main/images/arcgis_cdk_instance_prep.png)
 
@@ -135,6 +143,18 @@ A template PowerShell - EC2 Instance Prep file has been provided "EC2InstancePre
 
 At this point the infrastructure should have been stood up with CDK, the EC2 Instances should have been prepped by the first Run Command in System Manager.  It's time to Deploy Some SOftware.
 
-1. Head back to the System Manager -> Run Command Section
-2. Create a new run command
-3. Search for the PowerShell Template
+1. Ensure the ArcGIS Enterprise Software has been uploaded to the S3 bucekt created by the CDK
+2. Navigate to Amazon Sysetms Manager
+3. Chose the Run Command from the options on the left
+4. Create a new run command
+5. Search for the existing PowerShell Run Document
+    * `AWS-RunPowerShellScript`
+6. Paramaters for Run Command
+    * `Document` - 1 (Default)
+    * `Command paramaters` - Copy the contents from InvokeDSC.ps1 file (updated with your paramaters)
+    * `Working Directory` - Leave Blank
+    * `Execution Timeout` - Change to 28.800 (we want to give the commands at least 8 hours to complete)
+    * `Targets` - Choose ONLY the orchestration instance
+    * Other parameters can be left as default
+    * (Optionally) COnfigure an S3 Bucket where Command output will be added
+7. Execute the Run Command!!
