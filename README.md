@@ -1,23 +1,22 @@
 
-# Welcome to the arcgis_cdk
+# Welcome to the arcgis_cdk project
 
-This project uses AWS CDK, AWS Systems Manager, and ArcGIS PowerShellDSC Libraries to automate the deployment of AWS Infrastructure and ArcGIS Enterprise.
+This project uses AWS Cloud Development Kit, AWS Systems Manager, and ArcGIS PowerShellDSC Libraries to automate the deployment of AWS Infrastructure and ArcGIS Enterprise.
 
 ## Prerequisites
 
 * An AWS Account
-* An S3 Bucket
 * Access to ArcGIS Insallation and License files
-* AWS CLI --> Link
-* AWS CDK --> Link
-* Ability to create DNS Records to Point to A Record (optionally this can be done with CDK if use AWS Route53 --> Link)
-
+* [https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html](AWS Command Line Interface (CLI))
+* [https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html](AWS Cloud Development Kit)
+* Ability to create DNS Records to Point to A Record
+* Amazon Certificate Manage Certificate
 
 ## Configuring, Synthesesing, and Deploying the CDK
 
-Overview of CDK goes here...and links to setup....
+The Amazon Cloud Development Kit is a relatively newer tool that allows developers to create code in the language that they are most comfortable in and translate that into AWS Infrastructure by generating CloudFormation templates.  
 
-How to get started with the CDK
+Before proceeding, ensure you have both the AWS CLI and AWS CDK available and working (see prerequisites for more information)
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
@@ -72,13 +71,26 @@ command.
  * `cdk docs`        open CDK documentation
 
 
-A few things here about CDK and
-
 ### CDK Configuration Paramaters
 
-* Configruation Paramaters
-* Number 2
-* Number 3
+Now that you have your virtual envrionment setup with AWS CDK, lets take a look at how this repo is using it.  There is a arcgis_cdk_config.json file in the arcgis_cdk directory.  The following parameters can be used.
+
+* stack_name - the name of your stack (will also show up as )
+* high_availability - true/false depending on if you want site to be HA
+* cert_arn - ARN for your ACM certificate
+* file_server_size - size of file server ( m5.large)
+* kp_name - key pair name
+* public_hosted_zone_id - zone id for your Route53 public hosted zone
+* build_dsc_file - comming soon
+
+Once the arcgis_cdk_config.json has been updated be sure to synth and deploy your code
+
+```
+$ cdk synth
+```
+```
+$ cdk deploy
+```
 
 ## AWS System Manager - Machine Setup
 
@@ -91,9 +103,8 @@ Before we get started with installing PowerShell DSC via the Invoke-ArcGIS Comma
 * Downloading the PowerShell DSC modules and adding to PowerShe
 * Adding a local account to each machine for Windows Remote Management (WInRM)
 * Changing the execution policy
-* 
 
-A template PowerShell - EC2 Instance Prep file has been provided "EC2-Instance-Prep.ps1".  Edit the following sections with your paramaters
+A template PowerShell - EC2 Instance Prep file has been provided "EC2InstancePrep.ps1".  Edit the following sections with your paramaters
 * Bucket name 
 * License file name
 * IP Addresses of machines
@@ -102,7 +113,6 @@ A template PowerShell - EC2 Instance Prep file has been provided "EC2-Instance-P
 2. Navigate to Amazon Sysetms Manager -> Run Command
 3. Create a new run command
 4. Search for the PowerShell Image
-
     Note: If you've run the CDK, these variables will be provided as outputs in the log.....
 6. Paramaters for Run Command
     * This....
