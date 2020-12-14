@@ -60,7 +60,7 @@ t_format = datetime.datetime.fromtimestamp(start_time).strftime('%d_%m_%H_%M_%S'
 log_name = f'ARCGIS_CDK_{t_format}.log'
 log_dir = os.path.join(this_dir, 'logs')
 logger = get_logger(log_name, log_dir, 'LOGGER')
-config_file = os.path.join(this_dir, 'arcgis_cdk_config.json')
+config_file = os.path.join(this_dir, 'arcgis_cdk_config_local.json')
 
 # Get Configuration Parameters
 params = get_config(config_file)
